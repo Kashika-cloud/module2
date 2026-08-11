@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <h1>Blog Dashboard</h1>
+
+    <p id="welcome"></p>
+
+    <a href="create-blog.html">
+        <button>Create New Blog</button>
+    </a>
+
+    <button onclick="logout()">Logout</button>
+
+    <h2>All Blogs</h2>
+
+    <div id="blogs"></div>
+
+</div>
+
+<script>
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user) {
+    window.location.href = "login.html";
+}
+
+document.getElementById("welcome").textContent =
+    "Welcome, " + user.name;
+
+async function loadBlogs() {
+
+    const response = await fetch("/api/blogs");
+
+    const data = await response.json();
+
+    const blogsDiv = document.getElementById("blogs");
+
+    blogsDiv.innerHTML = "";
+
+    data.blogs.forEach(blog => {
+
+        const blogDiv = document.createElement("div");
+
+        blogDiv.className = "blog";
+
+        blogDiv.innerHTML = `
+            <h3>${blog.title}</h3>
+            <p>${blog.content}</p>
+            <small>By ${blog.author}</small>
+            <br><br>
+            <button onclick="deleteBlog(${blog.id})">
+                Delete
+            </button>
+        `;
+
+        blogsDiv.appendChild(blogDiv);
+    });
+}
+
+async function deleteBlog(id) {
+
+    const response = await fetch("/api/blogs/" + id, {
+        method: "DELETE"
+    });
+
+    const data = await response.json();
+
+    alert(data.message);
+
+    loadBlogs();
+}
+
+function logout() {
+
+    localStorage.removeItem("user");
+
+    window.location.href = "login.html";
+}
+
+loadBlogs();
+
+</script>
+
+</body>
+</html>

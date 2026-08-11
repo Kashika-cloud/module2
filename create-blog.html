@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Create Blog</h1>
+
+    <form id="blogForm">
+
+        <input
+            type="text"
+            id="title"
+            placeholder="Blog Title"
+            required
+        >
+
+        <textarea
+            id="content"
+            placeholder="Write your blog..."
+            required
+        ></textarea>
+
+        <button type="submit">Create Blog</button>
+
+    </form>
+
+    <p id="message"></p>
+
+    <a href="dashboard.html">Back to Dashboard</a>
+
+</div>
+
+<script>
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user) {
+    window.location.href = "login.html";
+}
+
+document.getElementById("blogForm").addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    const title = document.getElementById("title").value;
+    const content = document.getElementById("content").value;
+
+    const response = await fetch("/api/blogs", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            title,
+            content,
+            author: user.name
+        })
+    });
+
+    const data = await response.json();
+
+    document.getElementById("message").textContent = data.message;
+
+    if (response.ok) {
+        document.getElementById("blogForm").reset();
+    }
+
+});
+
+</script>
+
+</body>
+</html>

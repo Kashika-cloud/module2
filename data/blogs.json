@@ -1,0 +1,9 @@
+[
+  {
+    "id": 1786455453846,
+    "title": "My first blog",
+    "content": "This is my first blog created using Node.js and Express.js.",
+    "author": "Kashika",
+    "createdAt": "2026-08-11T13:37:33.846Z"
+  }
+]
