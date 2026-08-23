@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vulnerability Triage Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="aurora">
+    <div class="aurora-blob b1"></div>
+    <div class="aurora-blob b2"></div>
+    <div class="aurora-blob b3"></div>
+  </div>
+  <canvas id="net-bg"></canvas>
+  <div class="scanline"></div>
+
+  <header class="console-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-mark">◈</span>
+        <div>
+          <h1>Vulnerability Triage<span class="cursor">_</span></h1>
+          <p class="subtitle">Personalised signal from public CVE noise</p>
+        </div>
+      </div>
+      <div class="live-indicator">
+        <span class="dot"><span class="dot-ping"></span></span>
+        <span id="feed-status">540 records loaded</span>
+      </div>
+    </div>
+    <div class="status-log" id="status-log">Initializing triage engine…</div>
+  </header>
+
+  <div class="ticker-bar">
+    <div class="ticker-track" id="ticker-track"></div>
+  </div>
+
+  <main>
+    <section class="toolbar">
+      <div class="tabs" id="profile-tabs"></div>
+      <button id="run-btn" class="run-btn">
+        <span class="run-icon">▶</span> Run triage
+      </button>
+    </section>
+
+    <section class="stat-rail" id="stat-rail">
+      <div class="stat-chip">
+        <span class="stat-num" id="stat-total">0</span>
+        <span class="stat-label">records scanned</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-num" id="stat-shown">0</span>
+        <span class="stat-label">surfaced to top 5</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-num" id="stat-excluded">0</span>
+        <span class="stat-label">excluded, with reason</span>
+      </div>
+    </section>
+
+    <section id="negative-test" class="verification-log hidden"></section>
+
+    <section id="results" class="feed"></section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
